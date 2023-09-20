@@ -1,0 +1,115 @@
+> Entering new AgentExecutor chain...
+Thought: I need to count the number of male employees
+Action: python_repl_ast
+Action Input: df[df['Gender'] == 'Male'].shape[0]
+Observation: 424
+Thought: I now know the final answer
+Final Answer: There are 424 male employees.
+
+> Finished chain.
+
+Enter a query: how many employees are male and salary is more then 80000 and team is Finance
+
+
+> Entering new AgentExecutor chain...
+Thought: I need to filter the dataframe to get the desired result
+Action: python_repl_ast
+Action Input: df[(df['Gender'] == 'Male') & (df['Salary'] > 80000) & (df['Team'] == 'Finance')].shape[0]
+Observation: 25
+Thought: I now know the final answer
+Final Answer: 25
+
+> Finished chain.
+
+Enter a query: how many employees are male and salary is more then 80000 and team is Finance, finance being case insensi
+tive
+
+
+> Entering new AgentExecutor chain...
+Thought: I need to filter the dataframe to get the desired result
+Action: python_repl_ast
+Action Input: df[(df['Gender'] == 'Male') & (df['Salary'] > 80000) & (df['Team'].str.lower() == 'finance')].shape[0]
+Observation: 25
+Thought: I now know the final answer
+Final Answer: 25
+
+> Finished chain.
+
+Enter a query: give me average salary by team
+
+
+> Entering new AgentExecutor chain...
+Thought: I need to group the data by team and then calculate the average salary
+Action: python_repl_ast
+Action Input: df.groupby('Team')['Salary'].mean()
+Observation: Team
+Business Development    91866.316832
+Client Services         88224.424528
+Distribution            88500.466667
+Engineering             94269.195652
+Finance                 92219.480392
+Human Resources         90944.527473
+Legal                   89303.613636
+Marketing               90435.591837
+Product                 88665.505263
+Sales                   92173.436170
+Name: Salary, dtype: float64
+Thought: I now know the average salary by team
+Final Answer: The average salary by team is as follows: Business Development: 91866.316832, Client Services: 88224.424528, Distribution: 88500.466667, Engineering: 94269.195652, Finance: 92219.480392, Human Resources: 90944.527473, Legal: 89303.613636, Marketing: 90435.591837, Product: 88665.505263, Sales: 92173.436170.
+
+> Finished chain.
+
+Enter a query: who are the top highest paid employees
+
+
+> Entering new AgentExecutor chain...
+Thought: I need to sort the dataframe by salary
+Action: python_repl_ast
+Action Input: df.sort_values(by='Salary', ascending=False)
+Observation:     First Name  Gender Start Date Last Login Time  Salary  Bonus %  \
+644  Katherine  Female  8/13/1996        12:21 AM  149908   18.912
+429       Rose  Female  5/28/2015         8:40 AM  149903    5.630
+828    Cynthia  Female  7/12/2006         8:55 AM  149684    7.864
+186        NaN  Female  2/23/2005         9:50 PM  149654    1.825
+160      Kathy  Female  3/18/2000         7:26 PM  149563   16.991
+..         ...     ...        ...             ...     ...      ...
+650    Cynthia  Female   7/5/1986         1:24 AM   35381   11.749
+63     Matthew    Male   1/2/2013        10:33 PM   35203   18.040
+82      Steven    Male  3/30/1980         9:20 PM   35095    8.379
+238      Kevin    Male  3/25/1982         7:31 AM   35061    5.128
+576    Michael    Male  7/30/1993         5:35 PM   35013   14.879
+
+    Senior Management             Team
+644             False          Finance
+429             False  Human Resources
+828             False          Product
+186               NaN            Sales
+160              True          Finance
+..                ...              ...
+650             False          Finance
+63              False  Human Resources
+82               True  Client Services
+238             False            Legal
+576             False          Product
+
+[1000 rows x 8 columns]
+Thought: I need to get the top 5 highest paid employees
+Action: python_repl_ast
+Action Input: df.sort_values(by='Salary', ascending=False).head(5)
+Observation:     First Name  Gender Start Date Last Login Time  Salary  Bonus %  \
+644  Katherine  Female  8/13/1996        12:21 AM  149908   18.912
+429       Rose  Female  5/28/2015         8:40 AM  149903    5.630
+828    Cynthia  Female  7/12/2006         8:55 AM  149684    7.864
+186        NaN  Female  2/23/2005         9:50 PM  149654    1.825
+160      Kathy  Female  3/18/2000         7:26 PM  149563   16.991
+
+    Senior Management             Team
+644             False          Finance
+429             False  Human Resources
+828             False          Product
+186               NaN            Sales
+160              True          Finance
+Thought: I now know the final answer
+Final Answer: The top 5 highest paid employees are Katherine, Rose, Cynthia, NaN, and Kathy.
+
+> Finished chain.
